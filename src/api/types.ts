@@ -1,4 +1,3 @@
-
 export enum ApiEndpoints {
   LIST_LOCAL_MODELS = "/api/tags",
   LIST_RUNNING_MODLES =  "/api/ps",
@@ -170,7 +169,13 @@ export interface ChatCompletionSSERes {
   eval_duration?: number;
 }
 
-
+// Define GenerateChatReq
+export interface GenerateChatReq {
+  model: string;
+  messages: Message[];
+  stream: boolean;
+  system?: string;
+}
 
 // types that use for persistant state
 export interface Conversation {
@@ -182,4 +187,48 @@ export interface Conversation {
   system?: string;
   temperature?: number;
   seed?: string;
+  selectedCalculation?: CalculationData;
+}
+
+export interface CalculationData {
+  id: string;
+  type: string;
+  date: string;
+  totalAmount: number;
+  categories: {
+    [key: string]: number;
+  };
+  details?: {
+    [key: string]: any;
+  };
+}
+
+// Firebase calculation types
+export interface ApplianceData {
+  name: string;
+  watt: number;
+  hours: number;
+  days: string[];
+  weeks: string;
+  quantity: number;
+  costPerHour: number;
+  costPerDay: number;
+  costPerWeek: number;
+}
+
+export interface CalculationData {
+  id: string;
+  name?: string;
+  timestamp: number;
+  appliances: ApplianceData[];
+  totalCostPerHour: number;
+  totalCostPerDay: number;
+  totalCostPerWeek: number;
+  totalCost: number;
+  monthlyBill?: number;
+}
+
+export interface UserCalculations {
+  userId: string;
+  calculations: CalculationData[];
 }

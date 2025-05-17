@@ -45,6 +45,15 @@ export enum ConversationGroup {
 }
 
 
+export const formatCurrency = (amount: number): string => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(amount);
+};
+
 export function groupConversations(conversatins:Conversation[]) {
   const groups: Record<ConversationGroup, Conversation[]> = {
     [ConversationGroup.TODAY]: [],

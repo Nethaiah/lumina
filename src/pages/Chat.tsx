@@ -8,6 +8,7 @@ import { useChat } from "@/context/ChatContext";
 import ConversationView from "@/components/custom/CoversationView";
 import { Textarea } from "@/components/ui/textarea";
 import Header from "@/global/AppHeader";
+import CalculationSelector from "@/components/custom/CalculationSelector";
 
 const Chat = () => {
   
@@ -50,13 +51,12 @@ const Chat = () => {
   const isActive = (!isLoading) && (input.trim() !== "") && model 
 
   
-  return (
-    <div className="flex flex-col h-screen">
+  return (    <div className="flex flex-col h-screen">
       <Header />
       <div className="flex-1 overflow-y-auto p-4">
+        <CalculationSelector />
         <ConversationView c={currentConversation} />
       </div>
-       
 
       <div className="p-4 border-t">
         <form onSubmit={handleFormSubmit} className="flex-col">
