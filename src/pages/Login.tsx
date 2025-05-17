@@ -210,11 +210,11 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             <p className="text-red-500 text-xs mb-2">{errors.general}</p>
           )}
 
-          <p className="text-blue-400">
+          {/* <p className="text-blue-400">
             <Link to="/forgot-password" className="text-cta-bluegreen">
               Forgot password?
             </Link>
-          </p>
+          </p> */}
 
           <button
             className="cursor-pointer group/btn mt-5 relative block h-10 w-full rounded-md bg-[#0e1a1c] font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
@@ -234,12 +234,12 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             )}
           </button>
 
-          <p className="text-white mt-4 text-center cursor-pointer">
+          {/* <p className="text-white mt-4 text-center cursor-pointer">
             Don't have an account yet?{" "}
             <Link to="/signup" className="text-cta-bluegreen">
               Sign up Here
             </Link>
-          </p>
+          </p> */}
 
           <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
 

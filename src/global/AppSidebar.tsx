@@ -1,4 +1,3 @@
-
 import {
   Sidebar,
   SidebarContent,
@@ -23,15 +22,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { groupConversations } from "@/utils";
 import SidebarConversationItem from "@/components/custom/SidbarConversationItem";
 import { useCompletion } from "@/context/CompletionContext";
-import { Trash2Icon, MessageSquarePlus, Sparkles, MessageSquare } from "lucide-react";
+import { Trash2Icon, MessageSquarePlus, Sparkles, MessageSquare, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { LuminaLogo } from "@/assets";
 import SidebarButtonTrigger from "@/components/custom/SidebarButtonTrigger";
+import { auth } from "@/firebase";
+import { Separator } from "@/components/ui/separator";
 
 const AppSidebar = () => {
   const location = useLocation()
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const isChat = location.pathname.startsWith("/chat")
   const rootPath = isChat ? "chat" : "completion"
@@ -54,6 +55,18 @@ const AppSidebar = () => {
     const newId = getNewConversation()
     navigate(`/${rootPath}/${newId}`)
   }
+
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      // Clear localStorage
+      localStorage.clear();
+      // Navigate to login page
+      navigate("/login", { replace: true });
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
   
   return (
    <Sidebar className="bg-background" variant="sidebar" collapsible="offcanvas">
@@ -135,10 +148,20 @@ const AppSidebar = () => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+        
+        <Separator className="my-2" />
+        
+        <Button
+          variant="ghost" 
+          className="w-full text-red-500 hover:text-red-600 hover:bg-red-50"
+          onClick={handleLogout}
+        >
+          <LogOut className="h-4 w-4 mr-2" />
+          Logout
+        </Button>
       </SidebarFooter>
     </Sidebar>
   )
 }
-
 
 export default AppSidebar;
