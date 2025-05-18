@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { 
   signInWithEmailAndPassword, 
   GoogleAuthProvider, 
   signInWithPopup 
 } from "firebase/auth";
+import Wattify from "@/assets/wattify-logo.svg"
 import { ref, set, get } from "firebase/database";
 import { auth, database } from "../firebase"; // Import from your firebase.ts file
 
@@ -165,15 +166,14 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     setLoading(false);
   };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8">
-      <div className="mx-auto w-full max-w-md rounded-lg bg-black/60 p-4 md:rounded-2xl md:p-8 dark:bg-black shadow-[0px_0px_15px_5px_rgba(0,183,235,0.1)]">
+  return (    <div className="dark min-h-screen flex items-center justify-center px-4 py-8 bg-background">
+      <div className="mx-auto w-full max-w-md rounded-lg bg-card/95 backdrop-blur-sm p-4 md:rounded-2xl md:p-8 border border-border/50 shadow-lg">
         <div className="w-full flex justify-center">
-          {/* You can replace this with your own logo */}
-          <div className="text-3xl font-bold text-cyan-500">Lumina</div>
+          {/* <div className="text-3xl font-bold text-primary">Wattiy</div> */}
+          <img src={Wattify} alt="Wattify Logo" className="w-54 h-20"/>
         </div>
         
-        <h2 className="text-3xl text-center font-bold text-white dark:text-neutral-200 mt-5">
+        <h2 className="text-3xl text-center font-bold text-foreground mt-5">
           Welcome Back
         </h2>
 
@@ -214,10 +214,9 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             <Link to="/forgot-password" className="text-cta-bluegreen">
               Forgot password?
             </Link>
-          </p> */}
-
+          </p> */}          
           <button
-            className="cursor-pointer group/btn mt-5 relative block h-10 w-full rounded-md bg-[#0e1a1c] font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
+            className="cursor-pointer group/btn mt-5 relative block h-10 w-full rounded-lg bg-primary font-medium text-primary-foreground hover:bg-primary/90 transition-colors shadow-lg"
             type="submit"
             disabled={loading}
           >
@@ -304,7 +303,7 @@ const Input: React.FC<InputProps> = (props) => {
   return (
     <input
       {...props}
-      className="h-10 rounded-md border border-neutral-700 bg-black px-3 py-2 text-sm text-white placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-cyan-500"
+      className="h-10 rounded-lg border border-border/50 bg-background/50 px-3 py-2 text-sm text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 transition-shadow"
     />
   );
 };

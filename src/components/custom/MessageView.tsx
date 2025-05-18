@@ -1,30 +1,49 @@
 import { Message } from "@/api/types"
+import { Bot, Copy, User } from "lucide-react";
 import { useClipboard } from "@/hooks/useClipboard";
-import { formatDistanceToNow } from "date-fns"
-import { Copy } from "lucide-react";
-import AssistantMessageView from "./AssistantMessageView";
-import UserMessageView from "./UserMessageView";
-const MessageView = ({m}:{m:Message}) => {
-  const {copy} = useClipboard()
-  const isUser = m.role == "user"
-  const friendlyTime = formatDistanceToNow(new Date(m.updated_at), {addSuffix: true})
-  const footerString = `${isUser ? "" : m.creator + " ~ " }${friendlyTime}` 
-  
+import MarkdownView from "./MarkdownView";
+
+const MessageView = ({m}:{m:Message | null}) => {
+  const { copy, isCopied } = useClipboard()
+
+  if (!m) return null;
+
+  const isUser = m.role === "user"
+
   return (
-    <li className={`border-1 rounded-sm p-4 group ${isUser ? "bg-background": "bg-white"}`}> 
-      <div className="flex justify-between text-gray-500 font-light">
-        <p className="uppercase text-gray-400 px-1.5 py-1 border-gray-300 border-1 rounded-sm text-xs mb-4">{isUser ? "you" : "assistant"}</p>
-        <div 
-          className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer"
-          role="button"
-          onClick={() => copy(m.content)}
+    <div className={`group flex items-start gap-4 ${isUser ? "justify-end" : ""}`}>
+      <div className={`flex items-start gap-4 ${isUser ? "flex-row-reverse" : ""}`}>
+        <div className={`flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border shadow-sm ${
+          isUser ? "bg-primary border-primary/10" : "bg-secondary border-border/50"
+        }`}>
+          {isUser ? (
+            <User className="h-4 w-4 text-primary-foreground" />
+          ) : (
+            <Bot className="h-4 w-4 text-secondary-foreground" />
+          )}
+        </div>
+        
+        <div className={`flex-1 space-y-2 overflow-hidden ${isUser ? "text-right" : ""}`}>
+          <div className={`rounded-lg p-4 ${
+            isUser 
+              ? "bg-primary text-primary-foreground" 
+              : "bg-card/50 backdrop-blur-sm border border-border/50 text-card-foreground"
+          }`}>
+            <MarkdownView text={m.content} />
+          </div>
+          
+          <button
+            onClick={() => copy(m.content)}
+            className={`opacity-0 group-hover:opacity-100 transition-opacity ${
+              isUser ? "float-left" : "float-right"
+            } text-xs text-muted-foreground hover:text-foreground flex items-center gap-1`}
           >
-          <Copy />
+            <Copy className="h-3 w-3" />
+            {isCopied ? "Copied!" : "Copy"}
+          </button>
         </div>
       </div>
-      { isUser ? <UserMessageView m={m} />: <AssistantMessageView m={m}/>}
-      <p className="text-sm text-gray-400 mt-2 text-right">{footerString}</p>
-    </li>
+    </div>
   )
 }
 

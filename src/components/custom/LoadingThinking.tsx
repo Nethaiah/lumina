@@ -1,10 +1,8 @@
-import React from "react"
-
 const LoadingThinking = () => {
   return (
-  <div className="mt-2 flex items-center text-gray-500">
+  <div className="mt-2 flex items-center text-muted-foreground">
     <svg
-      className="animate-spin h-5 w-5 mr-2"
+      className="animate-spin h-5 w-5 mr-2 text-primary/70"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -23,7 +21,7 @@ const LoadingThinking = () => {
         d="M4 12a8 8 0 018-8v8H4z"
       ></path>
     </svg>
-    Thinking...
+    <span className="text-sm font-medium">Thinking...</span>
   </div>
   )
 }

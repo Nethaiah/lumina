@@ -1,9 +1,9 @@
 {
-  "name": "lumina",
+  "name": "wattify",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "A minimal UI for talking to Ollama.",
+  "description": "A minimal UI for talking to Ollama.That suggest saving recommendation of you appliances consumptions",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

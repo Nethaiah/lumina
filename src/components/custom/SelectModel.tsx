@@ -1,4 +1,3 @@
-import React from "react";
 import { 
   Select,
   SelectItem,
@@ -27,13 +26,19 @@ const SelectModel = ({model, models, setModel, className=""}:SelectModelProps) =
       value={model?.name} 
       onValueChange={(value) => handleChangeValue(value)} 
       >
-      <SelectTrigger className={`${className} bg-white`}>
+      <SelectTrigger 
+        className={`${className} bg-card/50 backdrop-blur-sm border border-border/50 text-foreground hover:bg-card/70 focus:ring-primary/20 transition-colors`}
+      >
         <SelectValue placeholder="Select a model" />
       </SelectTrigger>
         {models.length > 0 && (
-          <SelectContent >
+          <SelectContent className="bg-card/95 backdrop-blur-md border border-border/50">
           {models.map((m: LocalModel) => (
-            <SelectItem key={m.name} value={m.name}>
+            <SelectItem 
+              key={m.name} 
+              value={m.name}
+              className="text-foreground/90 hover:bg-primary/10 hover:text-primary focus:bg-primary/20 focus:text-primary"
+            >
               {m.name}
             </SelectItem>
           ))}

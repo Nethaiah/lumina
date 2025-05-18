@@ -4,12 +4,14 @@ import AppSidebar from './AppSidebar';
 
 const AppLayout = () => { 
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset className='max-w-full h-screen'>
-          <Outlet />
-      </SidebarInset>
-    </SidebarProvider>
+    <div className="dark min-h-screen bg-background">
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset className='max-w-full min-h-screen bg-background/95 backdrop-blur-sm'>
+            <Outlet />
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
   ) 
 }
 

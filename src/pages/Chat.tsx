@@ -51,20 +51,23 @@ const Chat = () => {
   const isActive = (!isLoading) && (input.trim() !== "") && model 
 
   
-  return (    <div className="flex flex-col h-screen">
+  return (
+    <div className="flex flex-col h-screen bg-background/95">
       <Header />
       <div className="flex-1 overflow-y-auto p-4">
-        <CalculationSelector />
-        <ConversationView c={currentConversation} />
+        <div className="max-w-4xl mx-auto space-y-6">
+          <CalculationSelector />
+          <ConversationView c={currentConversation} />
+        </div>
       </div>
 
-      <div className="p-4 border-t">
-        <form onSubmit={handleFormSubmit} className="flex-col">
+      <div className="border-t border-border/40 bg-background/95 backdrop-blur-sm p-4">
+        <form onSubmit={handleFormSubmit} className="flex-col max-w-4xl mx-auto">
           <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="bg-white flex-1 mb-4 focus-visible:ring-0 min-h-24"
+            className="bg-card/50 flex-1 mb-4 focus-visible:ring-primary/20 min-h-24 border border-border/50 rounded-lg shadow-sm backdrop-blur-sm transition-shadow hover:shadow-md"
             disabled={isLoading}
           />
           <div className="flex justify-between gap-4">
@@ -72,20 +75,17 @@ const Chat = () => {
               model={model} 
               setModel={setModel} 
               models={models} 
-              className="flex-1 focus:ring-0 h-10 focus:outline-none"
+              className="flex-1 focus:ring-primary/20 h-10 focus:outline-none bg-card/50 border border-border/50 rounded-lg backdrop-blur-sm"
             />
           
             <Button
-              className={`flex bg-gray-300 text-gray-600 h-10 p-4 
-                ${isActive ? "bg-cyan-500 text-white": ""}`}
+              className={`flex h-10 px-6 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md
+                ${isActive ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-secondary text-secondary-foreground hover:bg-secondary/90"}`}
               disabled={!isActive}
               type="submit"
             > 
-              <span className="">Run</span>
-              <span className={`py-0.5 px-2 border-gray-400 border-1 
-                flex justify-center items-center rounded-sm ${isActive ? "border-white": ""}`}>
-                <CornerDownLeft className="" />  
-              </span>
+              <span className="mr-2">Run</span>
+              <CornerDownLeft className="h-4 w-4" />
             </Button>
           </div>
         </form>

@@ -8,6 +8,23 @@ import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
+export type Appliance = {
+  name: string
+  usage: number
+  unit: string
+  currency: string
+}
+
+export type Options = {
+  dailyUsage: number,
+  monthlyusage: number,
+  yearlyUsage: number,
+  monthlyBill: number,
+  yearlyBill: number,
+  selected: boolean,
+  appliance: Appliance
+}
+
 const CalculationSelector = () => {
   const {
     userCalculations,
@@ -137,7 +154,7 @@ Please provide:
   }
 
   return (
-    <Card className="p-4 mb-4 bg-[#212121] text-slate-200">
+    <Card className="bg-card/50 backdrop-blur-sm border border-border/50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
       <h3 className="text-xl font-semibold mb-4 text-cta-bluegreen">Select Calculation for Analysis</h3>
       <ScrollArea className="h-[400px] pr-4">
         <div className="space-y-3">

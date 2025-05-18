@@ -6,8 +6,7 @@ import {
   CalculationData, 
   GenerateChatReq, 
   GenerateChatRes,
-  GenerateCompletionReq,
-  ApplianceData
+  GenerateCompletionReq
 } from "@/api/types";
 import { ref, get } from "firebase/database";
 import { database } from "@/firebase";
