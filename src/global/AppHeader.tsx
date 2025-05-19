@@ -7,9 +7,13 @@ import { useSidebar } from "@/components/ui/sidebar";
 const AppHeader = () => {
   const location = useLocation();
   const { open } = useSidebar();
+  
+  const useChatHolder = useChat();
+  const useCompletionHolder = useCompletion();
+  
 
   const isChat = location.pathname.startsWith("/chat");
-  const { currentConversation } = isChat ? useChat() : useCompletion();
+  const { currentConversation } = isChat ? useChatHolder : useCompletionHolder;
 
   return (
     <header className="flex w-full bg-background/95 backdrop-blur-sm border-b border-border/40 px-4 py-2 items-center min-h-14 gap-4 sticky top-0 z-10">

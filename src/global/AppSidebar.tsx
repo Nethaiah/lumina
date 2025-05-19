@@ -33,6 +33,9 @@ import { Separator } from "@/components/ui/separator";
 const AppSidebar = () => {
   const location = useLocation()
   const navigate = useNavigate();
+  
+  const useChatHolder = useChat();
+  const useCompletionHolder = useCompletion();
 
   const isChat = location.pathname.startsWith("/chat")
   const rootPath = isChat ? "chat" : "completion"
@@ -42,7 +45,7 @@ const AppSidebar = () => {
     clearConversations, 
     deleteConversation,
     getNewConversation,
-  } = isChat ? useChat() : useCompletion()
+  } = isChat ? useChatHolder : useCompletionHolder
 
   const grouped = groupConversations(conversations)
 
