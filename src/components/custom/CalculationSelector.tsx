@@ -1,29 +1,29 @@
-import React from 'react';
-import { useChat } from '@/context/ChatContext';
-import { CalculationData } from '@/api/types';
-import { Card } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import React from "react";
+import { useChat } from "@/context/ChatContext";
+import { CalculationData } from "@/api/types";
+import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 export type Appliance = {
-  name: string
-  usage: number
-  unit: string
-  currency: string
-}
+  name: string;
+  usage: number;
+  unit: string;
+  currency: string;
+};
 
 export type Options = {
-  dailyUsage: number,
-  monthlyusage: number,
-  yearlyUsage: number,
-  monthlyBill: number,
-  yearlyBill: number,
-  selected: boolean,
-  appliance: Appliance
-}
+  dailyUsage: number;
+  monthlyusage: number;
+  yearlyUsage: number;
+  monthlyBill: number;
+  yearlyBill: number;
+  selected: boolean;
+  appliance: Appliance;
+};
 
 const CalculationSelector = () => {
   const {
@@ -36,7 +36,9 @@ const CalculationSelector = () => {
     setInput,
   } = useChat();
 
-  const [expandedCalculation, setExpandedCalculation] = React.useState<string | null>(null);
+  const [expandedCalculation, setExpandedCalculation] = React.useState<
+    string | null
+  >(null);
 
   // Function to format timestamp
   const formatDate = (timestamp: number) => {
@@ -53,7 +55,11 @@ const CalculationSelector = () => {
   };
 
   // Function to generate a fallback name if none exists
-  const getCalculationDisplayName = (calculation: CalculationData, index: number, totalCount: number) => {
+  const getCalculationDisplayName = (
+    calculation: CalculationData,
+    index: number,
+    totalCount: number
+  ) => {
     if (calculation.name) {
       return calculation.name;
     }
@@ -64,7 +70,9 @@ const CalculationSelector = () => {
       const remainingCount = calculation.appliances.length - 1;
 
       if (remainingCount > 0) {
-        return `${mainAppliance} + ${remainingCount} ${remainingCount === 1 ? "other" : "others"}`;
+        return `${mainAppliance} + ${remainingCount} ${
+          remainingCount === 1 ? "other" : "others"
+        }`;
       }
       return mainAppliance;
     }
@@ -87,8 +95,11 @@ const CalculationSelector = () => {
   // Function to generate default prompt for selected calculation
   const generateDefaultPrompt = (calculation: CalculationData) => {
     const applianceList = calculation.appliances
-      .map(app => `- ${app.name}: ${app.watt}W, ${app.hours}h/day, ${app.days.length} days/week`)
-      .join('\n');
+      .map(
+        (app) =>
+          `- ${app.name}: ${app.watt}W, ${app.hours}h/day, ${app.days.length} days/week`
+      )
+      .join("\n");
 
     return `Could you analyze my electricity consumption and provide recommendations for energy savings? Here are my current usage details:
 
@@ -111,7 +122,7 @@ Please provide:
   const handleCalculationSelect = (calculation: CalculationData) => {
     if (selectedCalculation?.id === calculation.id) {
       setSelectedCalculation(null);
-      setInput('');
+      setInput("");
     } else {
       setSelectedCalculation(calculation);
       setInput(generateDefaultPrompt(calculation));
@@ -147,16 +158,19 @@ Please provide:
     return (
       <Card className="p-4 mb-4 bg-[#212121] text-slate-200">
         <div className="text-sm text-slate-400">
-          No calculations found. Complete a calculation first to get AI analysis.
+          No calculations found. Complete a calculation first to get AI
+          analysis.
         </div>
       </Card>
     );
   }
 
   return (
-    <Card className="bg-card/50 backdrop-blur-sm border border-border/50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-      <h3 className="text-xl font-semibold mb-4 text-cta-bluegreen">Select Calculation for Analysis</h3>
-      <ScrollArea className="h-[400px] pr-4">
+    <Card className="bg-card/50 backdrop-blur-sm border border-border/50 p-4 mt-5 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+      <h3 className=" font-semibold text-2xl text-cta-bluegreen">
+        Select Calculation for Analysis
+      </h3>
+      <ScrollArea className="h-auto p-4">
         <div className="space-y-3">
           {userCalculations.map((calc, index) => (
             <div key={calc.id} className="bg-[#383c3d] p-4 rounded-lg">
@@ -174,7 +188,11 @@ Please provide:
                       className="text-white cursor-pointer"
                     >
                       <div className="font-medium">
-                        {getCalculationDisplayName(calc, index, userCalculations.length)}
+                        {getCalculationDisplayName(
+                          calc,
+                          index,
+                          userCalculations.length
+                        )}
                       </div>
                       <div className="text-sm text-white/60">
                         {formatDate(calc.timestamp)}
@@ -201,17 +219,26 @@ Please provide:
                 <div className="mt-4 pl-8">
                   <div className="text-sm space-y-4">
                     <div className="space-y-2">
-                      <h4 className="text-cta-bluegreen font-medium">Appliances:</h4>
+                      <h4 className="text-cta-bluegreen font-medium">
+                        Appliances:
+                      </h4>
                       {calc.appliances.map((appliance, i) => (
                         <div key={i} className="bg-[#212121] p-3 rounded">
                           <div className="font-medium text-white">
-                            {appliance.name} ({appliance.quantity || 1} unit{appliance.quantity > 1 ? 's' : ''})
+                            {appliance.name} ({appliance.quantity || 1} unit
+                            {appliance.quantity > 1 ? "s" : ""})
                           </div>
                           <div className="mt-2 text-white/70 text-sm">
                             <div>Wattage: {appliance.watt}W</div>
                             <div>Usage: {appliance.hours}h/day</div>
                             <div>Days/Week: {appliance.days.length}</div>
-                            <div>Monthly Cost: ₱{(appliance.costPerWeek * extractWeeks(appliance.weeks)).toFixed(2)}</div>
+                            <div>
+                              Monthly Cost: ₱
+                              {(
+                                appliance.costPerWeek *
+                                extractWeeks(appliance.weeks)
+                              ).toFixed(2)}
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -220,22 +247,30 @@ Please provide:
                     <div className="grid grid-cols-2 gap-3">
                       <div className="bg-[#586669] p-3 rounded-lg">
                         <div className="text-white/80">Daily Cost</div>
-                        <div className="text-lg font-bold">₱{calc.totalCostPerDay.toFixed(2)}</div>
+                        <div className="text-lg font-bold">
+                          ₱{calc.totalCostPerDay.toFixed(2)}
+                        </div>
                       </div>
                       <div className="bg-[#586669] p-3 rounded-lg">
                         <div className="text-white/80">Weekly Cost</div>
-                        <div className="text-lg font-bold">₱{calc.totalCostPerWeek.toFixed(2)}</div>
+                        <div className="text-lg font-bold">
+                          ₱{calc.totalCostPerWeek.toFixed(2)}
+                        </div>
                       </div>
                       <div className="bg-[#586669] p-3 rounded-lg col-span-2">
                         <div className="text-white/80">Monthly Cost</div>
-                        <div className="text-lg font-bold">₱{calc.totalCost.toFixed(2)}</div>
+                        <div className="text-lg font-bold">
+                          ₱{calc.totalCost.toFixed(2)}
+                        </div>
                       </div>
                     </div>
 
                     {calc.monthlyBill && (
                       <div className="bg-[#586669] p-3 rounded-lg">
                         <div className="text-white/80">Monthly Bill</div>
-                        <div className="text-lg font-bold">₱{calc.monthlyBill.toFixed(2)}</div>
+                        <div className="text-lg font-bold">
+                          ₱{calc.monthlyBill.toFixed(2)}
+                        </div>
                       </div>
                     )}
                   </div>
